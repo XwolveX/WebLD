@@ -1,0 +1,23 @@
+.contactGrid{display:grid; grid-template-columns:0.8fr 1.2fr; gap:80px;}
+.infoRow{display:flex; gap:16px; padding:22px 0; border-bottom:1px solid var(--line);}
+.infoRow .ciLabel{font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--bronze); width:110px; flex-shrink:0; padding-top:2px;}
+.infoRow .ciValue{font-size:14.5px; color:var(--walnut); font-weight:400;}
+.infoRow .ciValue small{display:block; color:var(--smoke); font-weight:300; margin-top:4px;}
+
+.formField{margin-bottom:24px;}
+.formField label{display:block; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:var(--smoke); margin-bottom:10px;}
+.formField input, .formField select, .formField textarea{
+  width:100%; border:none; border-bottom:1px solid var(--line); background:transparent; padding:12px 2px; font-family:'Manrope',sans-serif; font-size:15px; color:var(--walnut); transition:border-color 0.3s ease;
+}
+.formField input:focus, .formField select:focus, .formField textarea:focus{outline:none; border-color:var(--bronze);}
+.formField textarea{resize:vertical; min-height:110px;}
+.formRow2{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+.formError{color:#8C3A2E; font-size:12px; margin-top:6px; display:none;}
+.formField.invalid input, .formField.invalid select, .formField.invalid textarea{border-color:#8C3A2E;}
+.formField.invalid .formError{display:block;}
+.formNote{margin-top:24px; padding:16px 18px; background:var(--ivory-2); border-left:2px solid var(--bronze); font-size:12.5px; color:var(--smoke); line-height:1.6;}
+.formSuccess{margin-top:24px; padding:18px 20px; background:var(--green); color:var(--ivory); font-size:14px; display:none;}
+.formSuccess.show{display:block;}
+.mapFrame{width:100%; height:340px; border:1px solid var(--line); filter:grayscale(0.4) sepia(0.15); margin-top:40px;}
+
+@media(max-width:980px){.contactGrid{grid-template-columns:1fr; gap:50px;} .formRow2{grid-template-columns:1fr;}}

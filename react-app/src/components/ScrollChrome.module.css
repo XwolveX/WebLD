@@ -1,0 +1,11 @@
+.progress{position:fixed; top:0; left:0; height:2px; background:var(--bronze); width:0%; z-index:9998; transition:width 0.05s linear;}
+.grain{position:fixed; inset:0; z-index:9000; pointer-events:none; filter:url(#filmgrain); opacity:0.05; mix-blend-mode:overlay;}
+
+.cursorDot,.cursorRing{position:fixed; top:0; left:0; pointer-events:none; z-index:9999; border-radius:50%; transform:translate(-50%,-50%);}
+.cursorDot{width:6px; height:6px; background:var(--bronze); display:none;}
+.cursorRing{width:34px; height:34px; border:1px solid rgba(168,131,74,0.55); display:none; align-items:center; justify-content:center; transition:width 0.28s cubic-bezier(.2,.8,.2,1), height 0.28s cubic-bezier(.2,.8,.2,1), background 0.28s ease, border-color 0.28s ease;}
+.cursorRing.hovering{width:60px; height:60px; background:rgba(168,131,74,0.08); border-color:var(--bronze);}
+.cursorRing.hovering-label{width:96px; height:96px; background:var(--bronze-light); border-color:var(--bronze-light);}
+.cursorRing span{font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:var(--walnut); opacity:0; transition:opacity 0.2s ease; font-weight:600; text-align:center;}
+.cursorRing.hovering-label span{opacity:1;}
+.cursorDot,.cursorRing{display:none !important;}

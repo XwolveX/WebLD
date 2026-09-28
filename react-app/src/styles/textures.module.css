@@ -1,0 +1,15 @@
+/* Shared material-swatch and scene-photo backgrounds — reused across
+   Home, Spaces and ProjectDetail, so they live in one shared module
+   instead of being duplicated per page. */
+.texWalnut{background:linear-gradient(180deg, rgba(22,17,16,0.06), rgba(22,17,16,0.28)), url('https://images.unsplash.com/photo-1736506159776-22ca388780fa?auto=format&fit=crop&w=1200&q=75') center/cover no-repeat;}
+.texMarble{background:linear-gradient(180deg, rgba(22,17,16,0.04), rgba(22,17,16,0.24)), url('https://images.unsplash.com/photo-1786673214373-b6cfa24665df?auto=format&fit=crop&w=1200&q=75') center/cover no-repeat;}
+.texBronze{background:linear-gradient(180deg, rgba(22,17,16,0.05), rgba(22,17,16,0.3)), url('https://images.unsplash.com/photo-1743964817509-f171e2539363?auto=format&fit=crop&w=1200&q=75') center/cover no-repeat;}
+.texLeather{background:linear-gradient(180deg, rgba(22,17,16,0.05), rgba(22,17,16,0.3)), url('https://images.unsplash.com/photo-1741086154510-522e68f76933?auto=format&fit=crop&w=1200&q=75') center/cover no-repeat;}
+.texLinen{background:linear-gradient(180deg, rgba(22,17,16,0.04), rgba(22,17,16,0.22)), url('https://images.unsplash.com/photo-1528458909336-e7a0adfed0a5?auto=format&fit=crop&w=1200&q=75') center/cover no-repeat;}
+
+.sceneMeridian{background:url('https://images.unsplash.com/photo-1758448755778-90ebf4d0f1e7?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}
+.sceneSolstice{background:url('https://images.unsplash.com/photo-1765862835193-3c37388a409e?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}
+.sceneAtelier{background:url('https://images.unsplash.com/photo-1778731525532-d2ab833c8463?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}
+.sceneRiviera{background:url('https://images.unsplash.com/photo-1730104231026-46e3cf7c3141?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}
+.sceneTerra{background:url('https://images.unsplash.com/photo-1783936338672-2afc6e6266c9?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}
+.sceneNocturne{background:url('https://images.unsplash.com/photo-1648415198825-7c805bfa043e?auto=format&fit=crop&w=1600&q=75') center/cover no-repeat;}

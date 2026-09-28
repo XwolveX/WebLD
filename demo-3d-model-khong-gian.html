@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Không Gian 3D Model — Bản Demo · L&amp;D Ceramics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#F8F3EA; --ivory-2:#EFE7D8;
+  --walnut:#161110; --walnut-2:#1F1815; --walnut-soft:#2C221C;
+  --bronze:#A8834A; --bronze-light:#DEBB7C; --bronze-dark:#6E5228;
+  --sand:#CDBFA0; --smoke:#564D40;
+  --line-light: rgba(248,243,234,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--walnut);}
+body{font-family:'Manrope',sans-serif;color:var(--ivory);}
+h1,.serif{font-family:'Playfair Display',serif;font-weight:500;}
+a{color:inherit;text-decoration:none;}
+
+#scene-canvas{position:fixed;inset:0;display:block;cursor:grab;touch-action:none;}
+#scene-canvas.grabbing{cursor:grabbing;}
+
+/* ---------- Top bar ---------- */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:22px 32px;background:linear-gradient(to bottom, rgba(22,17,16,0.75), rgba(22,17,16,0));pointer-events:none;}
+#topbar .side{display:flex;align-items:center;gap:14px;pointer-events:auto;}
+.logo-mark{display:flex;align-items:center;gap:10px;}
+.logo-mark svg{width:30px;height:30px;stroke:var(--bronze-light);}
+.logo-text{font-family:'Playfair Display',serif;font-size:15px;letter-spacing:2px;display:block;}
+.logo-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--sand);opacity:0.75;display:block;margin-top:1px;}
+.badge{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--bronze-light);border:1px solid var(--line-light);
+  padding:5px 11px;border-radius:20px;font-weight:600;}
+#backBtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-light);display:flex;align-items:center;justify-content:center;
+  transition:background 0.25s ease,border-color 0.25s ease;}
+#backBtn:hover{background:rgba(248,243,234,0.08);border-color:var(--bronze-light);}
+#backBtn svg{width:16px;height:16px;stroke:var(--ivory);}
+
+/* ---------- Room label ---------- */
+#roomTitle{position:fixed;top:96px;left:32px;z-index:35;pointer-events:none;transition:opacity 0.35s ease;}
+#roomTitle .eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--bronze-light);font-weight:600;display:block;margin-bottom:6px;}
+#roomTitle h1{font-size:clamp(24px,3.6vw,36px);}
+
+/* ---------- Hint ---------- */
+#hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:36;pointer-events:none;text-align:center;
+  transition:opacity 0.6s ease;font-size:12.5px;letter-spacing:1.2px;color:var(--ivory);width:280px;}
+#hint .icon{width:38px;height:38px;margin:0 auto 12px;border:1px solid var(--line-light);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  animation:hintPulse 1.8s ease-in-out infinite;}
+#hint svg{width:16px;height:16px;stroke:var(--bronze-light);}
+@keyframes hintPulse{0%,100%{transform:scale(1);opacity:0.7;}50%{transform:scale(1.12);opacity:1;}}
+
+/* ---------- Joystick ---------- */
+#joyBase{position:fixed;left:34px;bottom:36px;z-index:40;width:118px;height:118px;border-radius:50%;
+  background:rgba(22,17,16,0.45);border:1px solid var(--line-light);backdrop-filter:blur(4px);touch-action:none;}
+#joyStick{position:absolute;left:50%;top:50%;width:52px;height:52px;border-radius:50%;background:rgba(222,187,124,0.85);
+  transform:translate(-50%,-50%);box-shadow:0 4px 14px rgba(0,0,0,0.35);}
+#joyHint{position:fixed;left:34px;bottom:162px;z-index:40;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sand);opacity:0.75;}
+
+/* ---------- Minimap ---------- */
+#minimap{position:fixed;right:28px;bottom:36px;z-index:40;border:1px solid var(--line-light);border-radius:10px;
+  background:rgba(22,17,16,0.55);backdrop-filter:blur(4px);}
+
+/* ---------- Loader ---------- */
+#loader{position:fixed;inset:0;z-index:100;background:var(--walnut);display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.7s ease, visibility 0.7s ease;}
+#loader.done{opacity:0;visibility:hidden;}
+#loader .inner{text-align:center;}
+#loader svg{width:64px;height:64px;stroke:var(--bronze-light);margin:0 auto 18px;display:block;}
+#loaderPct{font-size:11px;letter-spacing:3px;color:var(--sand);}
+#loaderLabel{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--bronze-light);margin-top:10px;}
+
+/* ---------- Credit ---------- */
+#credit{position:fixed;left:32px;top:50%;transform:translateY(220px);z-index:20;font-size:9.5px;letter-spacing:0.5px;color:var(--sand);opacity:0.5;display:none;}
+
+@media (max-width:640px){
+  #topbar{padding:16px 18px;}
+  #roomTitle{left:18px;top:78px;}
+  #roomTitle h1{font-size:22px;}
+  #joyBase{left:20px;bottom:22px;width:100px;height:100px;}
+  #joyStick{width:44px;height:44px;}
+  #joyHint{left:20px;bottom:132px;}
+  #minimap{right:16px;bottom:22px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="scene-canvas"></canvas>
+
+<div id="loader">
+  <div class="inner">
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke-width="0.8" stroke-dasharray="3 5"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="loaderPct">0%</div>
+    <div id="loaderLabel">Đang dựng mô hình 3D</div>
+  </div>
+</div>
+
+<div id="topbar">
+  <div class="side">
+    <a id="backBtn" href="khong-gian.html" title="Quay lại Không gian">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <a href="index.html" class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke-width="0.7"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><span class="logo-text">L&amp;D CERAMICS</span><span class="logo-sub">Mô hình 3D thật</span></span>
+    </a>
+  </div>
+  <div class="side"><span class="badge">Bản demo · prototype · v6</span></div>
+</div>
+
+<div id="roomTitle">
+  <span class="eyebrow" id="roomEyebrow">Không gian</span>
+  <h1 id="roomName">Phòng Khách</h1>
+</div>
+
+<div id="hint">
+  <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M4 12h16"/></svg></div>
+  Kéo chuột / vuốt để nhìn quanh · Dùng joystick góc trái (hoặc phím WASD) để đi lại giữa các phòng
+</div>
+
+<div id="joyHint">Di chuyển</div>
+<div id="joyBase"><div id="joyStick"></div></div>
+
+<canvas id="minimap" width="150" height="110"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function(){
+
+/* ============================================================
+   Scene / renderer
+   ============================================================ */
+var canvas = document.getElementById('scene-canvas');
+var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.shadowMap.enabled = false;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.55;
+
+var scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0e0b0a).convertSRGBToLinear();
+scene.fog = new THREE.Fog(new THREE.Color(0x0e0b0a).convertSRGBToLinear(), 14, 30);
+
+var camera = new THREE.PerspectiveCamera(62, window.innerWidth/window.innerHeight, 0.1, 100);
+var EYE_HEIGHT = 1.62;
+camera.position.set(0, EYE_HEIGHT, 2.4);
+
+window.addEventListener('resize', function(){
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ============================================================
+   Materials — procedural wood floor texture
+   ============================================================ */
+function makeWoodTexture(){
+  var c = document.createElement('canvas'); c.width = 512; c.height = 512;
+  var ctx = c.getContext('2d');
+  var planks = 8;
+  for (var i=0;i<planks;i++){
+    var y = i * (512/planks);
+    var shade = 40 + Math.random()*14;
+    ctx.fillStyle = 'rgb('+(shade+38)+','+(shade+24)+','+(shade+12)+')';
+    ctx.fillRect(0, y, 512, 512/planks);
+    ctx.strokeStyle = 'rgba(0,0,0,0.35)'; ctx.lineWidth = 2;
+    ctx.strokeRect(0, y, 512, 512/planks);
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    for (var g=0; g<18; g++){
+      var gy = y + Math.random()*(512/planks);
+      ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(512,gy+ (Math.random()*6-3)); ctx.stroke();
+    }
+  }
+  var tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(4,4);
+  tex.encoding = THREE.sRGBEncoding;
+  return tex;
+}
+
+function srgb(hex){ return new THREE.Color(hex).convertSRGBToLinear(); }
+
+var wallMat = new THREE.MeshStandardMaterial({color:srgb(0x2c221c), roughness:0.92, metalness:0.02});
+var wallMatAccent = new THREE.MeshStandardMaterial({color:srgb(0x1f1815), roughness:0.85, metalness:0.05});
+var floorMat = new THREE.MeshStandardMaterial({map:makeWoodTexture(), roughness:0.6, metalness:0.05});
+var ceilingMat = new THREE.MeshStandardMaterial({color:srgb(0xeee3d0), roughness:1});
+var trimMat = new THREE.MeshStandardMaterial({color:srgb(0xA8834A), roughness:0.35, metalness:0.55});
+
+/* ============================================================
+   Room geometry — two rooms joined by a doorway
+   Room A (living): x -5..5   z -4..4
+   Room B (dining): x  5..15  z -4..4
+   Doorway gap on shared wall x=5, z -1.2..1.2
+   ============================================================ */
+var H = 3.05; // ceiling height
+var group = new THREE.Group();
+scene.add(group);
+
+function wallBox(w,h,d,x,y,z,mat){
+  var m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat || wallMat);
+  m.position.set(x,y,z);
+  m.castShadow = true; m.receiveShadow = true;
+  group.add(m);
+  return m;
+}
+
+// Floor + ceiling (span both rooms)
+var floor = new THREE.Mesh(new THREE.PlaneGeometry(20,8), floorMat);
+floor.rotation.x = -Math.PI/2; floor.position.set(5,0,0); floor.receiveShadow = true;
+group.add(floor);
+
+var ceiling = new THREE.Mesh(new THREE.PlaneGeometry(20,8), ceilingMat);
+ceiling.rotation.x = Math.PI/2; ceiling.position.set(5,H,0); ceiling.receiveShadow = true;
+group.add(ceiling);
+
+// Room A perimeter (skip east side, handled by shared wall below)
+wallBox(0.2, H, 8, -5, H/2, 0, wallMatAccent);      // west wall
+wallBox(10, H, 0.2, 0, H/2, -4, wallMat);            // north wall
+wallBox(10, H, 0.2, 0, H/2, 4, wallMat);             // south wall
+
+// Room B perimeter (skip west side, shared wall)
+wallBox(0.2, H, 8, 15, H/2, 0, wallMatAccent);       // east wall
+wallBox(10, H, 0.2, 10, H/2, -4, wallMat);           // north wall
+wallBox(10, H, 0.2, 10, H/2, 4, wallMat);            // south wall
+
+// Shared partition wall with doorway gap (z: -1.2..1.2 open)
+wallBox(0.25, H, 2.8, 5, H/2, -2.6, wallMatAccent);  // segment north of door
+wallBox(0.25, H, 2.8, 5, H/2, 2.6, wallMatAccent);   // segment south of door
+wallBox(0.25, 0.5, 2.4, 5, H-0.25, 0, wallMatAccent);// lintel above doorway
+// door frame trim
+wallBox(0.06, H-0.5, 0.06, 5, (H-0.5)/2, -1.2, trimMat);
+wallBox(0.06, H-0.5, 0.06, 5, (H-0.5)/2, 1.2, trimMat);
+
+// Simple wall art panels (plain matte accent, no emissive — avoids highlight clipping)
+var panelMat = new THREE.MeshStandardMaterial({color:srgb(0x4a3a2c), roughness:0.95});
+function wallPanel(x,y,z, rotY){
+  var m = new THREE.Mesh(new THREE.PlaneGeometry(1.6,1.4), panelMat);
+  m.position.set(x,y,z); m.rotation.y = rotY;
+  group.add(m);
+}
+wallPanel(-4.87, 1.7, -1.2, Math.PI/2);
+wallPanel(-4.87, 1.7, 1.6, Math.PI/2);
+wallPanel(14.87, 1.7, 0, -Math.PI/2);
+
+// Recessed ceiling light discs
+[[-2,-1.5],[-2,1.5],[2,-1.5],[2,1.5],[8,-1.5],[8,1.5]].forEach(function(p){
+  var disc = new THREE.Mesh(new THREE.CircleGeometry(0.16,24), new THREE.MeshStandardMaterial({
+    color:srgb(0xfff2d9), emissive:srgb(0xffdca0), emissiveIntensity:0.3
+  }));
+  disc.rotation.x = Math.PI/2; disc.position.set(p[0], H-0.02, p[1]);
+  group.add(disc);
+});
+
+/* ============================================================
+   Lighting
+   ============================================================ */
+scene.add(new THREE.AmbientLight(srgb(0x9a8b78), 0.45));
+
+var hemi = new THREE.HemisphereLight(srgb(0xfff1da), srgb(0x2a201a), 0.3);
+scene.add(hemi);
+
+function warmLamp(x,y,z, intensity, dist, castShadow){
+  var l = new THREE.PointLight(srgb(0xffb877), intensity, dist, 2);
+  l.position.set(x,y,z);
+  if (castShadow){ l.castShadow = true; l.shadow.mapSize.set(1024,1024); l.shadow.bias = -0.002; }
+  scene.add(l);
+  return l;
+}
+warmLamp(-1.5, 2.7, 0, 0.7, 3.5, true);
+warmLamp(3, 2.7, -2, 0.5, 3, false);
+warmLamp(8, 2.7, 2, 0.6, 3.5, true);
+warmLamp(12, 2.7, -1.5, 0.45, 3, false);
+
+/* ============================================================
+   Furniture — dining table built from primitives
+   ============================================================ */
+var tableTopMat = new THREE.MeshStandardMaterial({color:srgb(0x1c140f), roughness:0.35, metalness:0.1});
+var tableLegMat = new THREE.MeshStandardMaterial({color:srgb(0x0f0b09), roughness:0.4, metalness:0.3});
+function buildTable(x,z){
+  var g = new THREE.Group();
+  var top = new THREE.Mesh(new THREE.BoxGeometry(1.5,0.06,0.9), tableTopMat);
+  top.position.y = 0.74; top.castShadow = true; top.receiveShadow = true;
+  g.add(top);
+  [[-0.65,-0.38],[0.65,-0.38],[-0.65,0.38],[0.65,0.38]].forEach(function(p){
+    var leg = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,0.74,10), tableLegMat);
+    leg.position.set(p[0],0.37,p[1]); leg.castShadow = true;
+    g.add(leg);
+  });
+  g.position.set(x,0,z);
+  group.add(g);
+}
+buildTable(8, 0);
+
+/* ============================================================
+   Load real glTF furniture (Khronos glTF Sample Assets, CC-BY)
+   ============================================================ */
+var ASSET_BASE = 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/';
+var gltfLoader = new THREE.GLTFLoader();
+var totalAssets = 3, loadedAssets = 0;
+
+function updateLoaderProgress(){
+  var pct = Math.round((loadedAssets/totalAssets)*100);
+  document.getElementById('loaderPct').textContent = pct+'%';
+}
+
+function loadModel(name, pos, rotY, scale, castShadow, cb){
+  gltfLoader.load(ASSET_BASE+name+'/glTF-Binary/'+name+'.glb', function(gltf){
+    var obj = gltf.scene;
+    obj.position.set(pos[0],pos[1],pos[2]);
+    obj.rotation.y = rotY || 0;
+    if (scale) obj.scale.setScalar(scale);
+    obj.traverse(function(n){
+      if (n.isLight) { n.intensity = 0; n.visible = false; }
+      if (n.isMesh){ n.castShadow = !!castShadow; n.receiveShadow = true; }
+    });
+    group.add(obj);
+    loadedAssets++; updateLoaderProgress();
+    if (cb) cb(obj);
+  }, undefined, function(){
+    loadedAssets++; updateLoaderProgress();
+  });
+}
+
+loadModel('SheenWoodLeatherSofa', [-1.4, 0, 2.3], Math.PI, 1, true);
+loadModel('LightsPunctualLamp', [1.6, 0, 2.6], 0, 0.9, true, function(lampObj){
+  warmLamp(1.6, 1.5, 2.6, 0.5, 6, false);
+});
+loadModel('ChairDamaskPurplegold', [-2.6, 0, -1.4], 0.6, 1, true, function(chair){
+  chair.updateMatrixWorld(true);
+  var a = chair.clone(); a.position.set(7.1, 0, -0.55); a.rotation.y = Math.PI/2 + 0.15; group.add(a);
+  var b = chair.clone(); b.position.set(8.9, 0, -0.55); b.rotation.y = Math.PI/2 - 0.15; group.add(b);
+  var c = chair.clone(); c.position.set(8, 0, 0.75); c.rotation.y = -Math.PI/2; group.add(c);
+});
+
+/* ============================================================
+   Free-roam first person controls
+   drag / touch = look around, joystick + WASD = move
+   ============================================================ */
+var yaw = -0.15, pitch = -0.04;
+var isDragging = false, lastX=0, lastY=0;
+var hint = document.getElementById('hint');
+var interacted = false;
+
+function markInteracted(){
+  if (interacted) return;
+  interacted = true;
+  hint.style.opacity = '0';
+}
+
+canvas.addEventListener('pointerdown', function(e){
+  isDragging = true; lastX = e.clientX; lastY = e.clientY;
+  canvas.classList.add('grabbing');
+  markInteracted();
+});
+window.addEventListener('pointerup', function(){ isDragging = false; canvas.classList.remove('grabbing'); });
+window.addEventListener('pointermove', function(e){
+  if (!isDragging) return;
+  var dx = e.clientX-lastX, dy = e.clientY-lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  yaw -= dx*0.0028;
+  pitch -= dy*0.0022;
+  pitch = Math.max(-0.6, Math.min(0.6, pitch));
+});
+
+// keyboard
+var keys = {};
+window.addEventListener('keydown', function(e){ keys[e.key.toLowerCase()] = true; markInteracted(); });
+window.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()] = false; });
+
+// joystick
+var joyBase = document.getElementById('joyBase');
+var joyStick = document.getElementById('joyStick');
+var joyActive = false, joyVec = {x:0,y:0};
+var joyRadius = 40;
+
+function joySet(clientX, clientY){
+  var rect = joyBase.getBoundingClientRect();
+  var cx = rect.left+rect.width/2, cy = rect.top+rect.height/2;
+  var dx = clientX-cx, dy = clientY-cy;
+  var dist = Math.min(Math.sqrt(dx*dx+dy*dy), joyRadius);
+  var ang = Math.atan2(dy,dx);
+  var nx = Math.cos(ang)*dist, ny = Math.sin(ang)*dist;
+  joyStick.style.transform = 'translate(-50%,-50%) translate('+nx+'px,'+ny+'px)';
+  joyVec.x = nx/joyRadius; joyVec.y = ny/joyRadius;
+}
+function joyReset(){
+  joyActive = false; joyVec.x = 0; joyVec.y = 0;
+  joyStick.style.transform = 'translate(-50%,-50%)';
+}
+joyBase.addEventListener('pointerdown', function(e){ joyActive = true; joySet(e.clientX,e.clientY); markInteracted(); e.stopPropagation(); });
+window.addEventListener('pointermove', function(e){ if (joyActive) joySet(e.clientX,e.clientY); });
+window.addEventListener('pointerup', function(){ if (joyActive) joyReset(); });
+
+/* ============================================================
+   Movement + collision (two overlapping rectangles = walkable area)
+   ============================================================ */
+var MARGIN = 0.55;
+function inRoomA(x,z){ return x > -5+MARGIN && x < 5-MARGIN && z > -4+MARGIN && z < 4-MARGIN; }
+function inRoomB(x,z){ return x > 5+MARGIN && x < 15-MARGIN && z > -4+MARGIN && z < 4-MARGIN; }
+function inDoorway(x,z){ return x > 4.4 && x < 5.6 && z > -1.0 && z < 1.0; }
+function isWalkable(x,z){ return inRoomA(x,z) || inRoomB(x,z) || inDoorway(x,z); }
+
+var velocity = new THREE.Vector2(0,0);
+var roomTitleEl = document.getElementById('roomTitle');
+var roomNameEl = document.getElementById('roomName');
+var roomEyebrowEl = document.getElementById('roomEyebrow');
+var currentZone = 'A';
+
+function updateRoomLabel(x){
+  var zone = x < 5 ? 'A' : 'B';
+  if (zone === currentZone) return;
+  currentZone = zone;
+  roomTitleEl.style.opacity = '0';
+  setTimeout(function(){
+    roomEyebrowEl.textContent = zone === 'A' ? 'Không gian 01' : 'Không gian 02';
+    roomNameEl.textContent = zone === 'A' ? 'Phòng Khách' : 'Phòng Ăn';
+    roomTitleEl.style.opacity = '1';
+  }, 260);
+}
+
+/* ============================================================
+   Minimap
+   ============================================================ */
+var mmCanvas = document.getElementById('minimap');
+var mmCtx = mmCanvas.getContext('2d');
+function drawMinimap(){
+  var W = mmCanvas.width, Hh = mmCanvas.height;
+  mmCtx.clearRect(0,0,W,Hh);
+  var scale = 6.2;
+  var ox = 22, oz = Hh/2;
+  function toXY(x,z){ return [ox + x*scale/2.6, oz + z*scale/2.6]; }
+  mmCtx.strokeStyle = 'rgba(222,187,124,0.55)'; mmCtx.lineWidth = 1.5;
+  mmCtx.strokeRect.apply(mmCtx, (function(){
+    var p1 = toXY(-5,-4), p2 = toXY(5,4);
+    return [p1[0], p1[1], p2[0]-p1[0], p2[1]-p1[1]];
+  })());
+  mmCtx.strokeRect.apply(mmCtx, (function(){
+    var p1 = toXY(5,-4), p2 = toXY(15,4);
+    return [p1[0], p1[1], p2[0]-p1[0], p2[1]-p1[1]];
+  })());
+  var pp = toXY(camera.position.x, camera.position.z);
+  mmCtx.fillStyle = '#DEBB7C';
+  mmCtx.beginPath(); mmCtx.arc(pp[0], pp[1], 4, 0, Math.PI*2); mmCtx.fill();
+  var dirLen = 12;
+  mmCtx.strokeStyle = '#DEBB7C'; mmCtx.lineWidth = 1.5;
+  mmCtx.beginPath(); mmCtx.moveTo(pp[0], pp[1]);
+  mmCtx.lineTo(pp[0] - Math.sin(yaw)*dirLen, pp[1] - Math.cos(yaw)*dirLen);
+  mmCtx.stroke();
+}
+
+/* ============================================================
+   Main loop
+   ============================================================ */
+var clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  var dt = Math.min(clock.getDelta(), 0.05);
+
+  camera.rotation.order = 'YXZ';
+  camera.rotation.y = yaw;
+  camera.rotation.x = pitch;
+
+  var moveX = 0, moveZ = 0;
+  if (keys['w'] || keys['arrowup']) moveZ -= 1;
+  if (keys['s'] || keys['arrowdown']) moveZ += 1;
+  if (keys['a'] || keys['arrowleft']) moveX -= 1;
+  if (keys['d'] || keys['arrowright']) moveX += 1;
+  if (joyActive){ moveX += joyVec.x; moveZ += joyVec.y; }
+
+  var len = Math.sqrt(moveX*moveX+moveZ*moveZ);
+  if (len > 1){ moveX/=len; moveZ/=len; }
+
+  var speed = 2.6;
+  var targetVX = (moveX*Math.cos(yaw) - moveZ*Math.sin(yaw)) * speed;
+  var targetVZ = (moveX*-Math.sin(yaw) - moveZ*Math.cos(yaw)) * speed;
+
+  velocity.x += (targetVX-velocity.x) * Math.min(1, dt*8);
+  velocity.y += (targetVZ-velocity.y) * Math.min(1, dt*8);
+
+  var nx = camera.position.x + velocity.x*dt;
+  var nz = camera.position.z + velocity.y*dt;
+
+  if (isWalkable(nx, camera.position.z)) camera.position.x = nx;
+  if (isWalkable(camera.position.x, nz)) camera.position.z = nz;
+
+  updateRoomLabel(camera.position.x);
+  drawMinimap();
+
+  renderer.render(scene, camera);
+}
+
+Promise.resolve().then(function(){
+  var checkReady = setInterval(function(){
+    if (loadedAssets >= totalAssets){
+      clearInterval(checkReady);
+      document.getElementById('loader').classList.add('done');
+    }
+  }, 150);
+});
+
+animate();
+
+})();
+</script>
+</body>
+</html>

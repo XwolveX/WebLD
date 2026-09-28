@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Về chúng tôi — L&D Ceramics</title>
+<meta name="description" content="Câu chuyện, giá trị cốt lõi và đội ngũ đứng sau L&D Ceramics — thương hiệu nội thất và gốm sứ từ Trung Quốc, hiện diện tại Việt Nam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="filmgrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>
+    <filter id="texWalnut" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.9" numOctaves="4" seed="7" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.11 0.20 0.16 0.27 0.13"/><feFuncG type="table" tableValues="0.07 0.13 0.10 0.18 0.08"/><feFuncB type="table" tableValues="0.04 0.08 0.06 0.11 0.05"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texMarble" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="4" seed="21" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.6 0.6 0.6 0 0" result="g"/>
+      <feComponentTransfer in="g" result="veins"><feFuncR type="table" tableValues="0.08 0.09 0.1 0.85 0.1 0.09"/><feFuncG type="table" tableValues="0.17 0.19 0.21 0.9 0.21 0.19"/><feFuncB type="table" tableValues="0.14 0.16 0.17 0.86 0.17 0.16"/></feComponentTransfer>
+      <feBlend in="veins" in2="veins" mode="normal"/>
+    </filter>
+    <filter id="texBronze" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.4" numOctaves="3" seed="4" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.55 0.55 0.55 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.42 0.66 0.55 0.82 0.48"/><feFuncG type="table" tableValues="0.31 0.5 0.4 0.62 0.35"/><feFuncB type="table" tableValues="0.15 0.26 0.2 0.32 0.17"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texLeather" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="turbulence" baseFrequency="0.9" numOctaves="2" seed="9" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.24 0.34 0.28"/><feFuncG type="table" tableValues="0.15 0.22 0.18"/><feFuncB type="table" tableValues="0.09 0.13 0.11"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texLinen" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 0.02" numOctaves="2" seed="12" stitchTiles="stitch" result="n1"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.25" numOctaves="2" seed="15" stitchTiles="stitch" result="n2"/>
+      <feBlend in="n1" in2="n2" mode="multiply" result="cross"/>
+      <feColorMatrix in="cross" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.4 0.4 0.4 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.71 0.82 0.75"/><feFuncG type="table" tableValues="0.65 0.75 0.68"/><feFuncB type="table" tableValues="0.53 0.62 0.56"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+  </defs>
+</svg>
+
+<div id="scrollProgress"></div>
+<div class="grain-overlay"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"><span id="cursorLabelText"></span></div>
+
+<header id="siteHeader">
+  <nav class="nav">
+    <a href="index.html" class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke-width="0.7"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><span class="logo-text">L&amp;D CERAMICS</span><span class="logo-sub">唯美陶瓷 · Life &amp; Design</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="common.navHome">Trang chủ</a>
+      <a href="khong-gian.html" data-i18n="common.navSpaces">Không gian</a>
+      <a href="chat-lieu.html" data-i18n="common.navMaterials">Chất liệu</a>
+      <a href="ve-chung-toi.html" class="current" data-i18n="common.navAbout">Về chúng tôi</a>
+      <a href="lien-he.html" data-i18n="common.navContact">Liên hệ</a>
+    </div>
+    <div class="nav-right">
+      <button id="langToggle" class="lang-toggle" data-active="vi" type="button" aria-label="Switch language / Chuyển ngôn ngữ">
+        <span class="lang-opt" data-lang-opt="vi">VI</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+      <a href="lien-he.html" class="nav-cta magnetic" data-i18n="common.navCta">Đặt lịch tư vấn</a>
+    </div>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<section class="page-hero page-hero-photo page-hero-story">
+  <div class="wrap">
+    <div class="breadcrumb reveal"><a href="index.html" data-i18n="common.breadcrumbHome">Trang chủ</a> / <span data-i18n="common.navAbout">Về chúng tôi</span></div>
+    <h1 class="reveal r1" data-i18n="about.h1">Nội thất không phải sản phẩm cuối cùng —<br>đó là một mối quan hệ lâu dài</h1>
+    <p class="hero-sub reveal r2" data-i18n="about.sub">Với không gian sống của bạn, với chất liệu chúng tôi chọn, và với những đôi tay đã làm ra từng món đồ.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap" style="max-width:820px;">
+    <p class="reveal" style="font-size:16px; color:var(--smoke); font-weight:300; margin-bottom:20px;" data-i18n="about.introP1">L&D là thương hiệu nội thất và gốm sứ cao cấp với nhiều năm phát triển tại Trung Quốc, dẫn dắt bởi đội ngũ kiến trúc sư và nghệ nhân tin rằng nội thất cao cấp không nằm ở thương hiệu in trên món đồ, mà ở việc từng chất liệu được chọn có lý do để tồn tại trong không gian đó.</p>
+    <p class="reveal r1" style="font-size:16px; color:var(--smoke); font-weight:300;" data-i18n="about.introP2">Chúng tôi chính thức có mặt tại Việt Nam để phục vụ trực tiếp khách hàng trong nước. Mỗi đơn hàng vẫn là một dự án riêng, được khảo sát, thiết kế và chế tác theo đúng không gian thật của khách hàng — không có phiên bản "gần giống" cho người khác.</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="story-visual reveal"><span data-i18n="about.storyCaption">Văn phòng &amp; xưởng chế tác tại Việt Nam — nơi từng chi tiết được hoàn thiện bằng tay</span></div></div>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal clip-reveal" data-i18n="about.journeyTitle">Hành trình</h2>
+      <p class="section-note reveal" data-i18n="about.journeyNote">Những cột mốc định hình cách L&D Ceramics làm việc hôm nay.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-row reveal"><span class="process-num">2011</span><h3 data-i18n="about.mile1Title">Thành lập tại Trung Quốc</h3><p data-i18n="about.mile1Desc">Bắt đầu từ một xưởng thiết kế nhỏ tại Trung Quốc, chuyên gia công nội thất và gốm sứ đặt riêng cho kiến trúc sư trong khu vực.</p></div>
+      <div class="process-row reveal r1"><span class="process-num">2015</span><h3 data-i18n="about.mile2Title">Mở rộng sang đá và kim loại</h3><p data-i18n="about.mile2Desc">Đưa đá tự nhiên và đồng chải xước vào quy trình sản xuất, hình thành ngôn ngữ chất liệu đặc trưng của thương hiệu.</p></div>
+      <div class="process-row reveal r2"><span class="process-num">2019</span><h3 data-i18n="about.mile3Title">Hợp tác cùng xưởng da Ý</h3><p data-i18n="about.mile3Desc">Bắt đầu nhập da thuộc pieno fiore trực tiếp, mở rộng danh mục sang các bộ sưu tập bọc da cao cấp.</p></div>
+      <div class="process-row reveal r3"><span class="process-num">2024</span><h3 data-i18n="about.mile4Title">Ra mắt BST Atelier</h3><p data-i18n="about.mile4Desc">Bộ sưu tập đầu tiên dành riêng cho không gian làm việc tại nhà, đánh dấu mở rộng sang phân khúc không gian đa năng.</p></div>
+      <div class="process-row reveal r4"><span class="process-num">2025</span><h3 data-i18n="about.mile5Title">Có mặt tại Việt Nam</h3><p data-i18n="about.mile5Desc">Mở văn phòng đại diện và xưởng chế tác tại An Khánh, TP.HCM, mang toàn bộ ngôn ngữ chất liệu của L&D đến khách hàng Việt Nam.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal clip-reveal" data-i18n="about.valuesTitle">Giá trị cốt lõi</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal"><span class="v-num">01</span><h3 data-i18n="about.v1Title">Thủ công</h3><p data-i18n="about.v1Desc">Mỗi món đồ đi qua tay nghệ nhân ở ít nhất ba công đoạn, không qua dây chuyền tự động hoá hoàn toàn.</p></div>
+      <div class="value-card reveal r1"><span class="v-num">02</span><h3 data-i18n="about.v2Title">Bền vững</h3><p data-i18n="about.v2Desc">Gỗ được thu mua từ nguồn khai thác có kiểm soát, ưu tiên chất liệu có thể sửa chữa thay vì thay thế.</p></div>
+      <div class="value-card reveal r2"><span class="v-num">03</span><h3 data-i18n="about.v3Title">Cá nhân hoá</h3><p data-i18n="about.v3Desc">Không có hai dự án giống nhau hoàn toàn — kích thước, chất liệu và chi tiết luôn theo không gian thật.</p></div>
+      <div class="value-card reveal r3"><span class="v-num">04</span><h3 data-i18n="about.v4Title">Minh bạch</h3><p data-i18n="about.v4Desc">Báo giá theo từng hạng mục cụ thể, không gộp chung để khách hàng luôn biết mình trả tiền cho điều gì.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal clip-reveal" data-i18n="about.teamTitle">Đội ngũ dẫn dắt</h2>
+      <p class="section-note reveal" data-i18n="about.teamNote">Thông tin đội ngũ trong bản demo này là placeholder — bạn thay bằng tên và ảnh thật của công ty mình.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">NĐ</div>
+        <h3 data-i18n="about.team1Name">Tên người sáng lập</h3>
+        <span class="role" data-i18n="about.team1Role">Nhà sáng lập &amp; Giám đốc sáng tạo</span>
+        <p data-i18n="about.team1Desc">Định hướng thẩm mỹ và ngôn ngữ chất liệu xuyên suốt các bộ sưu tập của L&D Ceramics.</p>
+      </div>
+      <div class="team-card reveal r1">
+        <div class="team-avatar">TK</div>
+        <h3 data-i18n="about.team2Name">Tên trưởng xưởng</h3>
+        <span class="role" data-i18n="about.team2Role">Trưởng xưởng chế tác</span>
+        <p data-i18n="about.team2Desc">Trực tiếp giám sát chất lượng ở từng công đoạn gia công thủ công tại xưởng.</p>
+      </div>
+      <div class="team-card reveal r2">
+        <div class="team-avatar">HL</div>
+        <h3 data-i18n="about.team3Name">Tên trưởng phòng thiết kế</h3>
+        <span class="role" data-i18n="about.team3Role">Trưởng phòng thiết kế</span>
+        <p data-i18n="about.team3Desc">Làm việc trực tiếp với khách hàng từ khảo sát không gian đến bản phối cảnh cuối cùng.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap reveal">
+    <span class="eyebrow" data-i18n="about.ctaEyebrow">Muốn làm việc cùng chúng tôi?</span>
+    <h2 data-i18n="about.ctaTitle">Kể cho chúng tôi nghe về không gian bạn đang nghĩ đến</h2>
+    <a href="lien-he.html" class="btn-primary magnetic" data-i18n="common.ctaFooterBtn">Đặt lịch tư vấn miễn phí</a>
+  </div>
+</section>
+
+<footer>
+  <div class="watermark" aria-hidden="true">L&amp;D</div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">L&amp;D CERAMICS</span>
+        <p data-i18n="common.footerBrandDesc">Nội thất may đo cho không gian sống thượng lưu. Gỗ, đồng và đá — chế tác thủ công tại Việt Nam.</p>
+      </div>
+      <div class="footer-col"><h4 data-i18n="common.footerExploreTitle">Khám phá</h4><a href="khong-gian.html" data-i18n="common.footerLinkSpaces">Không gian</a><a href="chat-lieu.html" data-i18n="common.footerLinkMaterials">Chất liệu</a><a href="ve-chung-toi.html" data-i18n="common.footerLinkAbout">Về chúng tôi</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerCompanyTitle">Công ty</h4><a href="ve-chung-toi.html" data-i18n="common.footerLinkStory">Câu chuyện</a><a href="khong-gian.html" data-i18n="common.footerLinkProjects">Dự án tiêu biểu</a><a href="lien-he.html" data-i18n="common.footerLinkCareers">Tuyển dụng</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerContactTitle">Liên hệ</h4><a href="lien-he.html" data-i18n="common.footerLinkWorkshop">Xưởng: An Khánh, TP.HCM</a><a href="mailto:hello@lndceramics.com">hello@lndceramics.com</a><a href="tel:+842838000000">028 3xxx xxxx</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="common.footerCopyright">© 2025 L&D Ceramics. Bản quyền thuộc về công ty.</span><span data-i18n="common.footerCredit">Thiết kế bởi L&D Studio</span></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

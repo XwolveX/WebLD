@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liên hệ — L&D Ceramics</title>
+<meta name="description" content="Đặt lịch tư vấn với L&D Ceramics — nội thất may đo, chế tác thủ công tại Việt Nam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="filmgrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>
+  </defs>
+</svg>
+
+<div id="scrollProgress"></div>
+<div class="grain-overlay"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"><span id="cursorLabelText"></span></div>
+
+<header id="siteHeader">
+  <nav class="nav">
+    <a href="index.html" class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke-width="0.7"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><span class="logo-text">L&amp;D CERAMICS</span><span class="logo-sub">唯美陶瓷 · Life &amp; Design</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-i18n="common.navHome">Trang chủ</a>
+      <a href="khong-gian.html" data-i18n="common.navSpaces">Không gian</a>
+      <a href="chat-lieu.html" data-i18n="common.navMaterials">Chất liệu</a>
+      <a href="ve-chung-toi.html" data-i18n="common.navAbout">Về chúng tôi</a>
+      <a href="lien-he.html" class="current" data-i18n="common.navContact">Liên hệ</a>
+    </div>
+    <div class="nav-right">
+      <button id="langToggle" class="lang-toggle" data-active="vi" type="button" aria-label="Switch language / Chuyển ngôn ngữ">
+        <span class="lang-opt" data-lang-opt="vi">VI</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+      <a href="lien-he.html" class="nav-cta magnetic" data-i18n="common.navCta">Đặt lịch tư vấn</a>
+    </div>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<section class="page-hero page-hero-photo page-hero-contact">
+  <div class="wrap">
+    <div class="breadcrumb reveal"><a href="index.html" data-i18n="common.breadcrumbHome">Trang chủ</a> / <span data-i18n="common.navContact">Liên hệ</span></div>
+    <h1 class="reveal r1" data-i18n="contact.h1">Bắt đầu cuộc trò chuyện về không gian của bạn</h1>
+    <p class="hero-sub reveal r2" data-i18n="contact.sub">Để lại thông tin — đội ngũ thiết kế sẽ phản hồi trong vòng 1–2 ngày làm việc để sắp lịch khảo sát.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <div class="reveal">
+        <div class="contact-info-row">
+          <span class="ci-label" data-i18n="contact.labelWorkshop">Xưởng</span>
+          <span class="ci-value" data-i18n="contact.valueWorkshop">73 Nguyễn Cơ Thạch, An Khánh<br>TP. Hồ Chí Minh<small>Tham quan xưởng theo lịch hẹn</small></span>
+        </div>
+        <div class="contact-info-row">
+          <span class="ci-label" data-i18n="contact.labelPhone">Điện thoại</span>
+          <span class="ci-value" data-i18n="contact.valuePhone">028 3xxx xxxx<small>Thứ 2 – Thứ 7, 9:00 – 18:00</small></span>
+        </div>
+        <div class="contact-info-row">
+          <span class="ci-label" data-i18n="contact.labelEmail">Email</span>
+          <span class="ci-value" data-i18n="contact.valueEmail">hello@lndceramics.com<small>Phản hồi trong 1–2 ngày làm việc</small></span>
+        </div>
+        <div class="contact-info-row">
+          <span class="ci-label" data-i18n="contact.labelSocial">Mạng xã hội</span>
+          <span class="ci-value" data-i18n="contact.valueSocial">Instagram · Pinterest · Facebook<small>@lndceramics (placeholder)</small></span>
+        </div>
+
+        <iframe class="map-frame reveal" loading="lazy" title="Bản đồ khu vực xưởng L&D Ceramics"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=106.7130585%2C10.7645616%2C106.7330585%2C10.7805616&amp;layer=mapnik&amp;marker=10.7725616%2C106.7230585"></iframe>
+      </div>
+
+      <div class="reveal r1">
+        <form id="contactForm" novalidate>
+          <div class="form-row-2">
+            <div class="form-field">
+              <label for="fName" data-i18n="contact.fieldName">Họ và tên</label>
+              <input type="text" id="fName" name="name" required>
+              <span class="form-error" data-i18n="contact.errName">Vui lòng nhập họ tên.</span>
+            </div>
+            <div class="form-field">
+              <label for="fPhone" data-i18n="contact.fieldPhone">Số điện thoại</label>
+              <input type="tel" id="fPhone" name="phone" required>
+              <span class="form-error" data-i18n="contact.errPhone">Vui lòng nhập số điện thoại.</span>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="fEmail" data-i18n="contact.fieldEmail">Email</label>
+            <input type="email" id="fEmail" name="email" required>
+            <span class="form-error" data-i18n="contact.errEmail">Vui lòng nhập email hợp lệ.</span>
+          </div>
+          <div class="form-field">
+            <label for="fInterest" data-i18n="contact.fieldInterest">Loại không gian quan tâm</label>
+            <select id="fInterest" name="interest">
+              <option data-i18n="spaces.filterLiving">Phòng khách</option>
+              <option data-i18n="spaces.filterBedroom">Phòng ngủ</option>
+              <option data-i18n="spaces.filterDining">Phòng ăn</option>
+              <option data-i18n="spaces.filterWork">Không gian làm việc</option>
+              <option data-i18n="spaces.filterOutdoor">Ngoài trời</option>
+              <option data-i18n="contact.interestUnsure">Chưa xác định — cần tư vấn</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="fMessage" data-i18n="contact.fieldMessage">Nội dung</label>
+            <textarea id="fMessage" name="message" required data-i18n="contact.messagePlaceholder" data-i18n-attr="placeholder" placeholder="Diện tích, phong cách mong muốn, thời gian dự kiến..."></textarea>
+            <span class="form-error" data-i18n="contact.errMessage">Vui lòng mô tả ngắn gọn nhu cầu của bạn.</span>
+          </div>
+          <button type="submit" class="btn-primary magnetic" style="cursor:pointer;" data-i18n="contact.submitBtn">Gửi yêu cầu tư vấn</button>
+          <div class="form-success" id="formSuccess"></div>
+          <div class="form-note" data-i18n="contact.formNote">
+            Lưu ý kỹ thuật: đây là form tĩnh (không có backend). Trước khi triển khai thật trên VPS, hãy nối form này với một dịch vụ nhận form (ví dụ Formspree, Web3Forms) hoặc một endpoint xử lý riêng — xem phần "Kết nối form liên hệ" trong README.md đi kèm.
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="watermark" aria-hidden="true">L&amp;D</div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">L&amp;D CERAMICS</span>
+        <p data-i18n="common.footerBrandDesc">Nội thất may đo cho không gian sống thượng lưu. Gỗ, đồng và đá — chế tác thủ công tại Việt Nam.</p>
+      </div>
+      <div class="footer-col"><h4 data-i18n="common.footerExploreTitle">Khám phá</h4><a href="khong-gian.html" data-i18n="common.footerLinkSpaces">Không gian</a><a href="chat-lieu.html" data-i18n="common.footerLinkMaterials">Chất liệu</a><a href="ve-chung-toi.html" data-i18n="common.footerLinkAbout">Về chúng tôi</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerCompanyTitle">Công ty</h4><a href="ve-chung-toi.html" data-i18n="common.footerLinkStory">Câu chuyện</a><a href="khong-gian.html" data-i18n="common.footerLinkProjects">Dự án tiêu biểu</a><a href="lien-he.html" data-i18n="common.footerLinkCareers">Tuyển dụng</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerContactTitle">Liên hệ</h4><a href="lien-he.html" data-i18n="common.footerLinkWorkshop">Xưởng: An Khánh, TP.HCM</a><a href="mailto:hello@lndceramics.com">hello@lndceramics.com</a><a href="tel:+842838000000">028 3xxx xxxx</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="common.footerCopyright">© 2025 L&D Ceramics. Bản quyền thuộc về công ty.</span><span data-i18n="common.footerCredit">Thiết kế bởi L&D Studio</span></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

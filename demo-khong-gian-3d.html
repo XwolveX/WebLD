@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Không Gian 3D — Bản Demo · L&amp;D Ceramics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#F8F3EA; --ivory-2:#EFE7D8;
+  --walnut:#161110; --walnut-2:#1F1815; --walnut-soft:#2C221C;
+  --bronze:#A8834A; --bronze-light:#DEBB7C; --bronze-dark:#6E5228;
+  --sand:#CDBFA0; --smoke:#564D40;
+  --line-light: rgba(248,243,234,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--walnut);}
+body{font-family:'Manrope',sans-serif;color:var(--ivory);}
+h1,.serif{font-family:'Playfair Display',serif;font-weight:500;}
+a{color:inherit;text-decoration:none;}
+
+#pano-canvas{position:fixed;inset:0;display:block;cursor:grab;}
+#pano-canvas.grabbing{cursor:grabbing;}
+
+/* ---------- Top bar ---------- */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:22px 32px;background:linear-gradient(to bottom, rgba(22,17,16,0.75), rgba(22,17,16,0));pointer-events:none;}
+#topbar .side{display:flex;align-items:center;gap:14px;pointer-events:auto;}
+.logo-mark{display:flex;align-items:center;gap:10px;}
+.logo-mark svg{width:30px;height:30px;stroke:var(--bronze-light);}
+.logo-text{font-family:'Playfair Display',serif;font-size:15px;letter-spacing:2px;display:block;}
+.logo-sub{font-size:9.5px;letter-spacing:1.5px;color:var(--sand);opacity:0.75;display:block;margin-top:1px;}
+.badge{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--bronze-light);border:1px solid var(--line-light);
+  padding:5px 11px;border-radius:20px;font-weight:600;}
+#backBtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-light);display:flex;align-items:center;justify-content:center;
+  transition:background 0.25s ease,border-color 0.25s ease;}
+#backBtn:hover{background:rgba(248,243,234,0.08);border-color:var(--bronze-light);}
+#backBtn svg{width:16px;height:16px;stroke:var(--ivory);}
+
+/* ---------- Room title ---------- */
+#roomTitle{position:fixed;top:96px;left:32px;z-index:35;pointer-events:none;transition:opacity 0.4s ease, transform 0.4s ease;}
+#roomTitle .eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--bronze-light);font-weight:600;display:block;margin-bottom:6px;}
+#roomTitle h1{font-size:clamp(28px,4vw,42px);}
+
+/* ---------- Hint ---------- */
+#hint{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:36;pointer-events:none;text-align:center;
+  transition:opacity 0.6s ease;font-size:12.5px;letter-spacing:1.5px;color:var(--ivory);}
+#hint .icon{width:38px;height:38px;margin:0 auto 12px;border:1px solid var(--line-light);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  animation:hintPulse 1.8s ease-in-out infinite;}
+#hint svg{width:16px;height:16px;stroke:var(--bronze-light);}
+@keyframes hintPulse{0%,100%{transform:scale(1);opacity:0.7;}50%{transform:scale(1.12);opacity:1;}}
+
+/* ---------- Hotspots ---------- */
+.hotspot{position:fixed;z-index:30;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;transition:opacity 0.25s ease;}
+.hotspot .ring{width:46px;height:46px;border-radius:50%;border:1px solid var(--bronze-light);background:rgba(22,17,16,0.45);
+  backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;position:relative;transition:transform 0.25s ease,background 0.25s ease;}
+.hotspot .ring::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(222,187,124,0.45);animation:ringPulse 2.2s ease-out infinite;}
+.hotspot .ring svg{width:16px;height:16px;stroke:var(--bronze-light);position:relative;z-index:1;}
+.hotspot:hover .ring{transform:scale(1.12);background:var(--bronze);}
+.hotspot .label{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--ivory);background:rgba(22,17,16,0.7);
+  padding:6px 12px;border-radius:20px;white-space:nowrap;opacity:0;transform:translateY(-4px);transition:opacity 0.25s ease,transform 0.25s ease;}
+.hotspot:hover .label{opacity:1;transform:translateY(0);}
+@keyframes ringPulse{0%{opacity:0.9;transform:scale(1);}100%{opacity:0;transform:scale(1.55);}}
+
+/* ---------- Bottom room switcher ---------- */
+#roomSwitcher{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;justify-content:center;gap:18px;
+  padding:26px 20px 30px;background:linear-gradient(to top, rgba(22,17,16,0.8), rgba(22,17,16,0));}
+.room-thumb{width:76px;height:52px;border-radius:8px;overflow:hidden;position:relative;cursor:pointer;background-size:cover;background-position:center;
+  border:2px solid transparent;transition:border-color 0.25s ease,transform 0.25s ease;flex-shrink:0;}
+.room-thumb:hover{transform:translateY(-3px);}
+.room-thumb.active{border-color:var(--bronze-light);}
+.room-thumb span{position:absolute;left:0;right:0;bottom:0;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;text-align:center;
+  padding:3px 2px;background:rgba(22,17,16,0.75);}
+.room-thumb::after{content:'';position:absolute;inset:0;background:rgba(22,17,16,0.28);transition:background 0.25s ease;}
+.room-thumb.active::after{background:rgba(22,17,16,0);}
+
+/* ---------- Zoom controls ---------- */
+#zoomControls{position:fixed;right:28px;bottom:118px;z-index:40;display:flex;flex-direction:column;gap:1px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--line-light);}
+#zoomControls button{width:36px;height:34px;background:rgba(22,17,16,0.55);color:var(--ivory);border:none;font-size:16px;cursor:pointer;transition:background 0.2s ease;}
+#zoomControls button:hover{background:var(--bronze-dark);}
+
+/* ---------- Loader ---------- */
+#loader{position:fixed;inset:0;z-index:100;background:var(--walnut);display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.7s ease, visibility 0.7s ease;}
+#loader.done{opacity:0;visibility:hidden;}
+#loader .inner{text-align:center;}
+#loader svg{width:64px;height:64px;stroke:var(--bronze-light);margin:0 auto 18px;display:block;}
+#loaderPct{font-size:11px;letter-spacing:3px;color:var(--sand);}
+#loaderLabel{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--bronze-light);margin-top:10px;}
+
+/* ---------- Transition veil ---------- */
+#veil{position:fixed;inset:0;z-index:60;background:var(--walnut);opacity:0;pointer-events:none;transition:opacity 0.55s ease;}
+#veil.show{opacity:1;}
+
+/* ---------- Credit ---------- */
+#credit{position:fixed;left:32px;bottom:100px;z-index:20;font-size:9.5px;letter-spacing:0.5px;color:var(--sand);opacity:0.55;}
+
+@media (max-width:640px){
+  #topbar{padding:16px 18px;}
+  #roomTitle{left:18px;top:78px;}
+  #roomTitle h1{font-size:24px;}
+  .room-thumb{width:58px;height:42px;}
+  #roomSwitcher{gap:10px;padding:16px 12px 20px;}
+  #credit{display:none;}
+  #zoomControls{right:16px;bottom:96px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="pano-canvas"></canvas>
+
+<div id="veil"></div>
+
+<div id="loader">
+  <div class="inner">
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke-width="0.8" stroke-dasharray="3 5"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div id="loaderPct">0%</div>
+    <div id="loaderLabel">Đang tải không gian 360°</div>
+  </div>
+</div>
+
+<div id="topbar">
+  <div class="side">
+    <a id="backBtn" href="khong-gian.html" title="Quay lại Không gian">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M15 18l-6-6 6-6"/></svg>
+    </a>
+    <a href="index.html" class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke-width="0.7"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><span class="logo-text">L&amp;D CERAMICS</span><span class="logo-sub">Không gian 3D</span></span>
+    </a>
+  </div>
+  <div class="side"><span class="badge">Bản demo · prototype</span></div>
+</div>
+
+<div id="roomTitle">
+  <span class="eyebrow" id="roomEyebrow">Không gian 01</span>
+  <h1 id="roomName">Phòng Khách</h1>
+</div>
+
+<div id="hint">
+  <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M4 12h16"/></svg></div>
+  Kéo để nhìn quanh · Cuộn để phóng · Bấm điểm sáng để sang phòng khác
+</div>
+
+<div id="zoomControls">
+  <button id="zoomIn">+</button>
+  <button id="zoomOut">&minus;</button>
+</div>
+
+<div id="roomSwitcher"></div>
+
+<div id="credit">Ảnh 360° minh hoạ từ Poly Haven (CC0) — dùng để demo, chưa phải ảnh dự án thực tế</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function(){
+
+var ROOMS = [
+  {
+    id:'living', eyebrow:'Không gian 01', name:'Phòng Khách',
+    img:'https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/anniversary_lounge.jpg',
+    hotspots:[ {to:'lounge', label:'Sang Quầy Bar', yaw:55, pitch:-9}, {to:'bath', label:'Sang Phòng Tắm', yaw:-150, pitch:-7} ]
+  },
+  {
+    id:'lounge', eyebrow:'Không gian 02', name:'Quầy Bar & Sảnh',
+    img:'https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/aft_lounge.jpg',
+    hotspots:[ {to:'living', label:'Sang Phòng Khách', yaw:-25, pitch:-8}, {to:'bath', label:'Sang Phòng Tắm', yaw:150, pitch:-9} ]
+  },
+  {
+    id:'bath', eyebrow:'Không gian 03', name:'Phòng Tắm',
+    img:'https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/bathroom.jpg',
+    hotspots:[ {to:'living', label:'Sang Phòng Khách', yaw:95, pitch:-6}, {to:'lounge', label:'Sang Quầy Bar', yaw:-105, pitch:-8} ]
+  }
+];
+
+var canvas = document.getElementById('pano-canvas');
+var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 1100);
+camera.position.set(0,0,0.01);
+
+var geometry = new THREE.SphereGeometry(500, 60, 40);
+geometry.scale(-1,1,1);
+var material = new THREE.MeshBasicMaterial();
+var sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+var controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = false;
+controls.enablePan = false;
+controls.rotateSpeed = -0.28;
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minPolarAngle = 0.15;
+controls.maxPolarAngle = Math.PI - 0.15;
+controls.autoRotate = true;
+controls.autoRotateSpeed = -0.35;
+
+var stopAutoRotate = function(){
+  controls.autoRotate = false;
+  var hint = document.getElementById('hint');
+  hint.style.opacity = '0';
+  canvas.removeEventListener('pointerdown', stopAutoRotate);
+};
+canvas.addEventListener('pointerdown', stopAutoRotate);
+setTimeout(function(){ document.getElementById('hint').style.opacity = '0'; }, 6000);
+
+canvas.addEventListener('pointerdown', function(){ canvas.classList.add('grabbing'); });
+window.addEventListener('pointerup', function(){ canvas.classList.remove('grabbing'); });
+
+canvas.addEventListener('wheel', function(e){
+  e.preventDefault();
+  camera.fov = THREE.MathUtils.clamp(camera.fov + e.deltaY*0.03, 34, 92);
+  camera.updateProjectionMatrix();
+}, {passive:false});
+document.getElementById('zoomIn').addEventListener('click', function(){
+  camera.fov = THREE.MathUtils.clamp(camera.fov - 8, 34, 92); camera.updateProjectionMatrix();
+});
+document.getElementById('zoomOut').addEventListener('click', function(){
+  camera.fov = THREE.MathUtils.clamp(camera.fov + 8, 34, 92); camera.updateProjectionMatrix();
+});
+
+window.addEventListener('resize', function(){
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ---------- texture loading ---------- */
+THREE.Cache.enabled = true;
+var loader = new THREE.TextureLoader();
+var textures = {};
+var loadedCount = 0;
+
+function loadRoomTexture(room){
+  return new Promise(function(resolve){
+    if (textures[room.id]) { resolve(textures[room.id]); return; }
+    loader.load(room.img, function(tex){
+      tex.encoding = THREE.sRGBEncoding;
+      tex.minFilter = THREE.LinearFilter;
+      textures[room.id] = tex;
+      loadedCount++;
+      updateLoaderProgress();
+      resolve(tex);
+    }, undefined, function(){
+      loadedCount++;
+      updateLoaderProgress();
+      resolve(null);
+    });
+  });
+}
+
+function updateLoaderProgress(){
+  var pct = Math.round((loadedCount / ROOMS.length) * 100);
+  document.getElementById('loaderPct').textContent = pct + '%';
+}
+
+/* ---------- hotspot DOM management ---------- */
+var hotspotLayer = document.body;
+var activeHotspotEls = [];
+var activeHotspotVecs = [];
+
+function clearHotspots(){
+  activeHotspotEls.forEach(function(el){ el.remove(); });
+  activeHotspotEls = [];
+  activeHotspotVecs = [];
+}
+
+function buildHotspots(room){
+  clearHotspots();
+  room.hotspots.forEach(function(h){
+    var yawRad = THREE.MathUtils.degToRad(h.yaw);
+    var pitchRad = THREE.MathUtils.degToRad(h.pitch);
+    var r = 480;
+    var vec = new THREE.Vector3(
+      r * Math.cos(pitchRad) * Math.sin(yawRad),
+      r * Math.sin(pitchRad),
+      r * Math.cos(pitchRad) * Math.cos(yawRad)
+    );
+    var el = document.createElement('div');
+    el.className = 'hotspot';
+    el.innerHTML = '<div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg></div><div class="label">'+h.label+'</div>';
+    el.addEventListener('click', function(){ goToRoom(h.to); });
+    hotspotLayer.appendChild(el);
+    activeHotspotEls.push(el);
+    activeHotspotVecs.push(vec);
+  });
+}
+
+function updateHotspotPositions(){
+  var camDir = new THREE.Vector3();
+  camera.getWorldDirection(camDir);
+  for (var i=0;i<activeHotspotEls.length;i++){
+    var vec = activeHotspotVecs[i].clone();
+    var toHotspot = vec.clone().normalize();
+    var dot = camDir.dot(toHotspot);
+    var el = activeHotspotEls[i];
+    if (dot < 0.1){ el.style.opacity = '0'; el.style.pointerEvents = 'none'; continue; }
+    vec.project(camera);
+    var x = (vec.x*0.5+0.5) * window.innerWidth;
+    var y = (-vec.y*0.5+0.5) * window.innerHeight;
+    el.style.left = x+'px';
+    el.style.top = y+'px';
+    el.style.opacity = '1';
+    el.style.pointerEvents = 'auto';
+  }
+}
+
+/* ---------- room switcher UI ---------- */
+var switcherEl = document.getElementById('roomSwitcher');
+ROOMS.forEach(function(room){
+  var el = document.createElement('div');
+  el.className = 'room-thumb';
+  el.id = 'thumb-'+room.id;
+  el.style.backgroundImage = "url('"+room.img+"')";
+  el.innerHTML = '<span>'+room.name+'</span>';
+  el.addEventListener('click', function(){ goToRoom(room.id); });
+  switcherEl.appendChild(el);
+});
+
+function setActiveThumb(id){
+  ROOMS.forEach(function(room){
+    document.getElementById('thumb-'+room.id).classList.toggle('active', room.id===id);
+  });
+}
+
+/* ---------- room transitions ---------- */
+var currentRoomId = null;
+var veil = document.getElementById('veil');
+
+function applyRoom(room){
+  material.map = textures[room.id];
+  material.needsUpdate = true;
+  document.getElementById('roomEyebrow').textContent = room.eyebrow;
+  document.getElementById('roomName').textContent = room.name;
+  buildHotspots(room);
+  setActiveThumb(room.id);
+  currentRoomId = room.id;
+}
+
+function goToRoom(id){
+  if (id === currentRoomId) return;
+  var room = ROOMS.find(function(r){ return r.id===id; });
+  veil.classList.add('show');
+  Promise.resolve(loadRoomTexture(room)).then(function(){
+    setTimeout(function(){
+      applyRoom(room);
+      requestAnimationFrame(function(){
+        setTimeout(function(){ veil.classList.remove('show'); }, 60);
+      });
+    }, 480);
+  });
+}
+
+/* ---------- boot ---------- */
+Promise.all(ROOMS.map(loadRoomTexture)).then(function(){
+  applyRoom(ROOMS[0]);
+  document.getElementById('loader').classList.add('done');
+});
+
+function animate(){
+  requestAnimationFrame(animate);
+  controls.update();
+  updateHotspotPositions();
+  renderer.render(scene, camera);
+}
+animate();
+
+})();
+</script>
+</body>
+</html>

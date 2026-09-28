@@ -1,0 +1,12 @@
+.footer{background:var(--walnut); color:var(--sand); padding:80px 0 30px; position:relative; overflow:hidden;}
+.watermark{position:absolute; bottom:-6%; left:50%; transform:translateX(-50%); font-family:'Playfair Display',serif; font-size:clamp(90px,18vw,260px); color:transparent; -webkit-text-stroke:1px rgba(222,187,124,0.12); white-space:nowrap; pointer-events:none; z-index:0; letter-spacing:0.02em;}
+.grid{display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:44px; margin-bottom:64px; position:relative; z-index:1;}
+.brand .logoText{font-family:'Playfair Display',serif; font-size:19px; letter-spacing:2.5px; line-height:1.1; color:var(--ivory); margin-bottom:16px; display:block;}
+.brand p{font-size:13px; max-width:270px; color:var(--sand); font-weight:300;}
+.col h4{font-size:11.5px; letter-spacing:1.8px; text-transform:uppercase; color:var(--bronze-light); margin-bottom:20px; font-weight:600;}
+.col a{display:block; font-size:13.5px; color:var(--sand); margin-bottom:13px; transition:color 0.3s ease;}
+.col a:hover{color:var(--ivory);}
+.bottom{border-top:1px solid var(--line-light); padding-top:26px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--smoke); position:relative; z-index:1;}
+
+@media(max-width:980px){.grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.grid{grid-template-columns:1fr;}}

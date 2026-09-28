@@ -1,0 +1,54 @@
+/* ============================================================
+   L&D Ceramics — design tokens + cross-cutting utility classes.
+   Component-specific visual styles live in each component's
+   *.module.css file; this file only holds the shared design
+   system (tokens, reset, typography) and the small set of plain
+   (non-module) marker classes that interaction hooks target with
+   querySelectorAll — e.g. .reveal, .magnetic — since CSS Modules
+   hash class names and would break those selectors.
+   ============================================================ */
+
+:root{
+  --ivory:#F8F3EA; --ivory-2:#EFE7D8;
+  --walnut:#161110; --walnut-2:#1F1815; --walnut-soft:#2C221C;
+  --bronze:#A8834A; --bronze-light:#DEBB7C; --bronze-dark:#6E5228;
+  --green:#16302A; --green-light:#2F5449;
+  --sand:#CDBFA0; --smoke:#564D40;
+  --line: rgba(22,17,16,0.10); --line-light: rgba(248,243,234,0.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:auto;}
+body{background:var(--ivory); color:var(--walnut); font-family:'Manrope',sans-serif; font-weight:400; line-height:1.65; overflow-x:hidden;}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif; font-weight:500;}
+a{color:inherit; text-decoration:none;}
+button{cursor:pointer;}
+
+.wrap{max-width:1240px; margin:0 auto; padding:0 40px;}
+.eyebrow{font-size:11.5px; letter-spacing:3.5px; text-transform:uppercase; color:var(--bronze); font-weight:600; display:block;}
+.eyebrow.on-dark{color:var(--bronze-light);}
+
+section{padding:140px 0;}
+.section-tight{padding:90px 0;}
+
+/* ---------- Buttons (reused across every page) ---------- */
+.btn-primary{background:var(--bronze); color:var(--walnut); padding:16px 32px; font-size:12px; letter-spacing:2px; text-transform:uppercase; font-weight:600; display:inline-block; transition:background 0.35s ease; border:none; font-family:'Manrope',sans-serif;}
+.btn-primary:hover{background:var(--bronze-light);}
+.btn-ghost{border:1px solid var(--line-light); color:var(--ivory); padding:15px 30px; font-size:12px; letter-spacing:2px; text-transform:uppercase; display:inline-block; transition:border-color 0.35s ease, background 0.35s ease; background:transparent;}
+.btn-ghost:hover{border-color:var(--bronze-light); background:rgba(255,255,255,0.05);}
+.btn-ghost.on-light{border-color:var(--line); color:var(--walnut);}
+.btn-ghost.on-light:hover{border-color:var(--bronze); background:rgba(168,131,74,0.06);}
+
+/* ---------- Reveal-on-scroll utilities ----------
+   Targeted directly by useReveal() via querySelectorAll('.reveal'),
+   so these stay plain (non CSS-module) classes. */
+.reveal{opacity:0; transform:translateY(40px); transition:opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1);}
+.reveal.visible{opacity:1; transform:translateY(0);}
+.r1{transition-delay:0.1s;} .r2{transition-delay:0.2s;} .r3{transition-delay:0.3s;} .r4{transition-delay:0.4s;} .r5{transition-delay:0.5s;}
+.clip-reveal{opacity:1 !important; transform:none !important; clip-path:inset(0 100% 0 0); transition:clip-path 1.1s cubic-bezier(.2,.7,.2,1);}
+.clip-reveal.visible{clip-path:inset(0 0% 0 0);}
+
+/* ---------- Generic section head (reused by Home / Spaces / Materials / About) ---------- */
+.section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:64px; flex-wrap:wrap;}
+.section-head h2{font-size:clamp(28px,3.4vw,44px); max-width:560px; line-height:1.18;}
+.section-note{max-width:320px; color:var(--smoke); font-size:15.5px; font-weight:400; line-height:1.6;}
+@media(max-width:700px){.section-head{flex-direction:column; align-items:flex-start;} .section-note{max-width:100%;}}

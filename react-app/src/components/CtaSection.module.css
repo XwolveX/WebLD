@@ -1,0 +1,3 @@
+.cta{background:linear-gradient(135deg, var(--green), #0f2119); color:var(--ivory); text-align:center; padding:140px 0; position:relative; overflow:hidden;}
+.cta :global(.eyebrow){color:var(--bronze-light); margin-bottom:22px;}
+.cta h2{font-size:clamp(32px,4.4vw,54px); max-width:680px; margin:0 auto 36px; line-height:1.2;}

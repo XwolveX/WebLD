@@ -1,0 +1,5 @@
+.preloader{position:fixed; inset:0; z-index:10000; background:var(--walnut); display:flex; align-items:center; justify-content:center; transition:opacity 0.8s ease, visibility 0.8s ease;}
+.preloader svg{width:110px; height:110px; display:block; margin:0 auto;}
+.preloader path{fill:none; stroke:var(--bronze-light); stroke-width:1.1; stroke-linecap:round;}
+.pct{margin-top:16px; text-align:center; font-size:11px; letter-spacing:3px; color:var(--sand);}
+.done{opacity:0; visibility:hidden;}

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L&D Ceramics — Life &amp; Design, nội thất may đo thủ công</title>
+<meta name="description" content="L&D Ceramics kiến tạo nội thất từ gỗ óc chó, đồng chải xước và đá tự nhiên — nội thất may đo cho không gian sống thượng lưu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="filmgrain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0"/></filter>
+    <filter id="texWalnut" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.9" numOctaves="4" seed="7" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.11 0.20 0.16 0.27 0.13"/><feFuncG type="table" tableValues="0.07 0.13 0.10 0.18 0.08"/><feFuncB type="table" tableValues="0.04 0.08 0.06 0.11 0.05"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texMarble" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="4" seed="21" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.6 0.6 0.6 0 0" result="g"/>
+      <feComponentTransfer in="g" result="veins"><feFuncR type="table" tableValues="0.08 0.09 0.1 0.85 0.1 0.09"/><feFuncG type="table" tableValues="0.17 0.19 0.21 0.9 0.21 0.19"/><feFuncB type="table" tableValues="0.14 0.16 0.17 0.86 0.17 0.16"/></feComponentTransfer>
+      <feBlend in="veins" in2="veins" mode="normal"/>
+    </filter>
+    <filter id="texBronze" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.4" numOctaves="3" seed="4" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.55 0.55 0.55 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.42 0.66 0.55 0.82 0.48"/><feFuncG type="table" tableValues="0.31 0.5 0.4 0.62 0.35"/><feFuncB type="table" tableValues="0.15 0.26 0.2 0.32 0.17"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texLeather" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="turbulence" baseFrequency="0.9" numOctaves="2" seed="9" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.24 0.34 0.28"/><feFuncG type="table" tableValues="0.15 0.22 0.18"/><feFuncB type="table" tableValues="0.09 0.13 0.11"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+    <filter id="texLinen" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.25 0.02" numOctaves="2" seed="12" stitchTiles="stitch" result="n1"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.25" numOctaves="2" seed="15" stitchTiles="stitch" result="n2"/>
+      <feBlend in="n1" in2="n2" mode="multiply" result="cross"/>
+      <feColorMatrix in="cross" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.4 0.4 0.4 0 0" result="g"/>
+      <feComponentTransfer in="g" result="d"><feFuncR type="table" tableValues="0.71 0.82 0.75"/><feFuncG type="table" tableValues="0.65 0.75 0.68"/><feFuncB type="table" tableValues="0.53 0.62 0.56"/></feComponentTransfer>
+      <feBlend in="d" in2="d" mode="normal"/>
+    </filter>
+  </defs>
+</svg>
+
+<div id="scrollProgress"></div>
+<div class="grain-overlay"></div>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"><span id="cursorLabelText"></span></div>
+
+<div id="preloader">
+  <div>
+    <svg viewBox="0 0 120 120"><path id="preloaderPath" d="M20,90 L20,30 L38,70 L56,30 L56,90 M74,30 C96,30 96,90 74,90 M74,30 L74,90" stroke-dasharray="600" stroke-dashoffset="600"/></svg>
+    <div id="preloaderPct">0%</div>
+  </div>
+</div>
+
+<div class="section-dots">
+  <a href="#heroSection" data-label="Trang chủ" class="active"></a>
+  <a href="#collections" data-label="Không gian"></a>
+  <a href="#materials" data-label="Chất liệu"></a>
+  <a href="#process" data-label="Quy trình"></a>
+  <a href="#cta-final" data-label="Kết nối"></a>
+</div>
+
+<header id="siteHeader">
+  <nav class="nav">
+    <a href="index.html" class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke-width="0.7"/><path d="M13,27 L13,13 L20,24 L27,13 L27,27" stroke-width="1.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><span class="logo-text">L&amp;D CERAMICS</span><span class="logo-sub">唯美陶瓷 · Life &amp; Design</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="current" data-i18n="common.navHome">Trang chủ</a>
+      <a href="khong-gian.html" data-i18n="common.navSpaces">Không gian</a>
+      <a href="chat-lieu.html" data-i18n="common.navMaterials">Chất liệu</a>
+      <a href="ve-chung-toi.html" data-i18n="common.navAbout">Về chúng tôi</a>
+      <a href="lien-he.html" data-i18n="common.navContact">Liên hệ</a>
+    </div>
+    <div class="nav-right">
+      <button id="langToggle" class="lang-toggle" data-active="vi" type="button" aria-label="Switch language / Chuyển ngôn ngữ">
+        <span class="lang-opt" data-lang-opt="vi">VI</span>
+        <span class="lang-opt" data-lang-opt="en">EN</span>
+      </button>
+      <a href="lien-he.html" class="nav-cta magnetic" data-i18n="common.navCta">Đặt lịch tư vấn</a>
+    </div>
+    <div class="burger" id="burger"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<section class="hero" id="heroSection">
+  <div class="hero-glow"></div>
+  <div class="hero-ornament" id="heroOrnament"><div class="facet"></div><div class="facet"></div><div class="facet"></div></div>
+  <div class="hero-content">
+    <span class="eyebrow on-dark" data-i18n="index.heroEyebrow">Bậc thầy Thiết kế Cuộc sống</span>
+    <h1 class="hero-headline" id="heroHeadline" data-i18n="index.heroHeadline">
+      <span class="word"><span>Cuộc</span></span> <span class="word"><span>sống</span></span> <span class="word"><span>được</span></span><br>
+      <span class="word"><span><em>tạo</em></span></span> <span class="word"><span><em>tác</em></span></span> <span class="word"><span>từ</span></span> <span class="word"><span>chất</span></span> <span class="word"><span>liệu</span></span>
+    </h1>
+    <p class="hero-sub" data-i18n="index.heroSub">L&D Ceramics kiến tạo không gian sống từ gỗ óc chó, đồng chải xước và đá tự nhiên — nội thất may đo dành riêng cho những không gian sống không thể sao chép.</p>
+    <div class="hero-cta-row">
+      <a href="lien-he.html" class="btn-primary magnetic" data-i18n="index.heroCtaPrimary">Đặt lịch tư vấn</a>
+      <a href="#collections" class="btn-ghost magnetic" data-i18n="index.heroCtaGhost">Xem không gian</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span data-i18n="index.scrollCue">Cuộn xuống</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Gỗ óc chó</span><span>Đồng chải xước</span><span>Đá cẩm thạch xanh</span><span>Da thuộc Ý</span><span>Vải lanh tự nhiên</span>
+    <span>Gỗ óc chó</span><span>Đồng chải xước</span><span>Đá cẩm thạch xanh</span><span>Da thuộc Ý</span><span>Vải lanh tự nhiên</span>
+  </div>
+</div>
+
+<section class="philosophy">
+  <div class="wrap">
+    <span class="eyebrow reveal" data-i18n="index.philosophyEyebrow" style="display:block; margin-bottom:22px;">Triết lý thiết kế</span>
+    <div class="quote-mark reveal">"</div>
+    <blockquote class="reveal" data-i18n="index.philosophyQuote">Chúng tôi không thiết kế nội thất. Chúng tôi <em>biên soạn</em> lại cách một không gian được sống trong đó, từng centimet một.</blockquote>
+    <div class="philosophy-divider reveal"></div>
+  </div>
+</section>
+
+<section class="hgallery" id="collections">
+  <div class="hgallery-track" id="hgalleryTrack">
+    <div class="hpanel">
+      <div class="hpanel-bg scene-meridian"></div>
+      <div class="hpanel-text">
+        <span class="space-num" data-i18n="index.panel1Num">01 — BST Meridian</span>
+        <h3 data-i18n="index.panel1Title">Phòng khách tĩnh tại</h3>
+        <p data-i18n="index.panel1Desc">Gỗ óc chó nguyên khối, đường nét tối giản, dành cho không gian tiếp khách trầm và sâu.</p>
+        <a href="du-an-chi-tiet.html?id=meridian" class="space-link magnetic" data-i18n="common.viewDetails">Xem chi tiết</a>
+      </div>
+    </div>
+    <div class="hpanel">
+      <div class="hpanel-bg scene-solstice"></div>
+      <div class="hpanel-text">
+        <span class="space-num" data-i18n="index.panel2Num">02 — BST Solstice</span>
+        <h3 data-i18n="index.panel2Title">Phòng ngủ chữa lành</h3>
+        <p data-i18n="index.panel2Desc">Đá cẩm thạch xanh rêu kết hợp vải lanh tự nhiên, tạo nhịp thở chậm cho không gian nghỉ ngơi.</p>
+        <a href="du-an-chi-tiet.html?id=solstice" class="space-link magnetic" data-i18n="common.viewDetails">Xem chi tiết</a>
+      </div>
+    </div>
+    <div class="hpanel">
+      <div class="hpanel-bg scene-atelier"></div>
+      <div class="hpanel-text">
+        <span class="space-num" data-i18n="index.panel3Num">03 — BST Atelier</span>
+        <h3 data-i18n="index.panel3Title">Không gian làm việc</h3>
+        <p data-i18n="index.panel3Desc">Đồng chải xước và da thuộc Ý — chất liệu của những quyết định quan trọng.</p>
+        <a href="du-an-chi-tiet.html?id=atelier" class="space-link magnetic" data-i18n="common.viewDetails">Xem chi tiết</a>
+      </div>
+    </div>
+    <div class="hpanel hpanel-end">
+      <div class="hpanel-text">
+        <span class="eyebrow on-dark" style="margin-bottom:18px;" data-i18n="index.panelEndEyebrow">Còn nhiều hơn thế</span>
+        <h3 data-i18n="index.panelEndTitle">Khám phá toàn bộ dự án đã hoàn thiện</h3>
+        <div style="margin-top:28px;"><a href="khong-gian.html" class="btn-primary magnetic" data-i18n="index.panelEndBtn">Xem tất cả không gian</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="reveal"><div class="stat-num" data-count="14">0</div><div class="stat-label" data-i18n="index.statLabel1">Năm chế tác</div></div>
+      <div class="reveal r1"><div class="stat-num" data-count="360">0</div><div class="stat-label" data-i18n="index.statLabel2">Dự án hoàn thiện</div></div>
+      <div class="reveal r2"><div class="stat-num" data-count="98">0</div><div class="stat-label" data-i18n="index.statLabel3">% khách giới thiệu lại</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="materials">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal clip-reveal" data-i18n="index.materialsTitle">Chất liệu định hình đẳng cấp</h2>
+      <p class="section-note reveal" data-i18n="index.materialsNote">Mỗi bề mặt được kiểm định thủ công trước khi đưa vào sản xuất. <a href="chat-lieu.html" style="color:var(--bronze); border-bottom:1px solid var(--bronze);">Xem toàn bộ thư viện chất liệu →</a></p>
+    </div>
+    <div class="swatch-grid">
+      <div class="swatch reveal"><div class="swatch-fill sw-a"></div><div class="swatch-label"><span data-i18n="index.swatchA">Gỗ óc chó</span><small data-i18n="index.swatchASub">Massif</small></div></div>
+      <div class="swatch reveal r1"><div class="swatch-fill sw-b"></div><div class="swatch-label"><span data-i18n="index.swatchB">Đồng chải xước</span><small data-i18n="index.swatchBSub">Brushed</small></div></div>
+      <div class="swatch reveal r2"><div class="swatch-fill sw-c"></div><div class="swatch-label"><span data-i18n="index.swatchC">Đá cẩm thạch xanh</span><small data-i18n="index.swatchCSub">Verde</small></div></div>
+      <div class="swatch reveal r3"><div class="swatch-fill sw-d"></div><div class="swatch-label"><span data-i18n="index.swatchD">Da thuộc Ý</span><small data-i18n="index.swatchDSub">Pieno Fiore</small></div></div>
+      <div class="swatch reveal r4"><div class="swatch-fill sw-e"></div><div class="swatch-label"><span data-i18n="index.swatchE">Vải lanh tự nhiên</span><small data-i18n="index.swatchESub">Belgian</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="reveal clip-reveal" data-i18n="index.processTitle">Quy trình bốn bước, không rút gọn</h2>
+      <p class="section-note reveal" data-i18n="index.processNote">Từ khảo sát đến bàn giao — mỗi bước do đội ngũ thiết kế và nghệ nhân của L&D Ceramics trực tiếp thực hiện.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-row reveal"><span class="process-num">01</span><h3 data-i18n="index.process1Title">Tư vấn không gian</h3><p data-i18n="index.process1Desc">Khảo sát thực tế, lắng nghe thói quen sống và ánh sáng tự nhiên của từng không gian cụ thể.</p></div>
+      <div class="process-row reveal r1"><span class="process-num">02</span><h3 data-i18n="index.process2Title">Thiết kế ý tưởng</h3><p data-i18n="index.process2Desc">Dựng phối cảnh và bảng chất liệu riêng, điều chỉnh cùng gia chủ trước khi chế tác.</p></div>
+      <div class="process-row reveal r2"><span class="process-num">03</span><h3 data-i18n="index.process3Title">Chế tác thủ công</h3><p data-i18n="index.process3Desc">Nghệ nhân gia công từng chi tiết tại xưởng, kiểm soát chất lượng ở mọi công đoạn.</p></div>
+      <div class="process-row reveal r3"><span class="process-num">04</span><h3 data-i18n="index.process4Title">Lắp đặt &amp; bàn giao</h3><p data-i18n="index.process4Desc">Lắp đặt tại chỗ, hiệu chỉnh hoàn thiện và bàn giao cùng chế độ bảo hành riêng.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section class="cta-section" id="cta-final">
+  <div class="wrap reveal">
+    <span class="eyebrow" data-i18n="common.ctaFooterEyebrowGeneric">Bắt đầu dự án của bạn</span>
+    <h2 data-i18n="index.ctaTitle">Sẵn sàng kiến tạo không gian sống đẳng cấp của riêng bạn?</h2>
+    <a href="lien-he.html" class="btn-primary magnetic" data-i18n="common.ctaFooterBtn">Đặt lịch tư vấn miễn phí</a>
+  </div>
+</section>
+
+<footer>
+  <div class="watermark" aria-hidden="true">L&amp;D</div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">L&amp;D CERAMICS</span>
+        <p data-i18n="common.footerBrandDesc">Nội thất may đo cho không gian sống thượng lưu. Gỗ, đồng và đá — chế tác thủ công tại Việt Nam.</p>
+      </div>
+      <div class="footer-col"><h4 data-i18n="common.footerExploreTitle">Khám phá</h4><a href="khong-gian.html" data-i18n="common.footerLinkSpaces">Không gian</a><a href="chat-lieu.html" data-i18n="common.footerLinkMaterials">Chất liệu</a><a href="ve-chung-toi.html" data-i18n="common.footerLinkAbout">Về chúng tôi</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerCompanyTitle">Công ty</h4><a href="ve-chung-toi.html" data-i18n="common.footerLinkStory">Câu chuyện</a><a href="khong-gian.html" data-i18n="common.footerLinkProjects">Dự án tiêu biểu</a><a href="lien-he.html" data-i18n="common.footerLinkCareers">Tuyển dụng</a></div>
+      <div class="footer-col"><h4 data-i18n="common.footerContactTitle">Liên hệ</h4><a href="lien-he.html" data-i18n="common.footerLinkWorkshop">Xưởng: An Khánh, TP.HCM</a><a href="mailto:hello@lndceramics.com">hello@lndceramics.com</a><a href="tel:+842838000000">028 3xxx xxxx</a></div>
+    </div>
+    <div class="footer-bottom"><span data-i18n="common.footerCopyright">© 2025 L&D Ceramics. Bản quyền thuộc về công ty.</span><span data-i18n="common.footerCredit">Thiết kế bởi L&D Studio</span></div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

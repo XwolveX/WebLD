@@ -1,0 +1,6 @@
+.list{border-top:1px solid var(--line);}
+.row{display:grid; grid-template-columns:70px 1fr 1.3fr; gap:32px; align-items:center; padding:38px 0; border-bottom:1px solid var(--line); transition:padding-left 0.4s ease;}
+.row:hover{padding-left:14px;}
+.num{font-family:'Playfair Display',serif; font-size:15px; color:var(--bronze); letter-spacing:1px;}
+.row h3{font-size:25px; font-weight:500;}
+.row p{font-size:14.5px; color:var(--smoke); font-weight:400; line-height:1.6; max-width:440px;}
